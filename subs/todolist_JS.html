@@ -69,7 +69,7 @@
                 closeBtnAll[i].addEventListener('click', function removeList() {
                     console.log(this);
                     let closeID=this.getAttribute('id');
-                    itemList.splice(closeID+1,1);
+                    itemList.splice(closeID,1);
                     showList();
                 });
                 
