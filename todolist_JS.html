@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목록추가삭제앱</title>
+    <script src="./scripts/checklist_withDel.js" defer lang="javascript"></script>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box;}
+        h1{text-align: center; margin: 50px auto;}
+        li{list-style: decimal;}
+        button{border: none; width: 66px; height: 35px; line-height: 35px; cursor: pointer; font-weight: bold;}
+        .input-wrap{margin: 0 auto; text-align: center; padding: 20px 30px; max-width: 800px; background-color: turquoise; border-bottom: 1px solid #ddd; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%); margin-bottom: 10px;}
+        .input-wrap input{width: 400px; min-width: 265px; height: 35px;  border: 1px solid turquoise; background-color: #fff;}
+        .input-wrap button{margin-left: 5px; background-color: rgba(46, 156, 145, 0.911);}
+        .item-list{padding: 10%; max-width: 800px; margin: 0 auto;}
+        .item-list ul{}
+        .item-list ul li{display: flex; justify-content: space-between; border-bottom: 1px solid black; padding: 1%;}
+        .item-list ul li .close-btn{cursor: pointer; color:darkred; transition: 1.8s;}
+        .item-list ul li .close-btn:hover{color: rgba(152, 253, 57, 0.89);}
+    </style>
+</head>
+<body>
+    <!-- PROCESS:1.배열 만들기->2.배열에 추가->3.추가한 배열값을 반복문으로 출력->배열에서 값 삭제 기능 제작 -->
+    <div id="wrap">
+        <h1>여행 준비물 점검 앱</h1>
+        <div class="input-wrap">
+            <input type="text" name="준비물을 입력하세요" id="item" autofocus="true">
+            <button type="button" id="addBtn" class="add-btn">추가</button>
+        </div>
+        <div class="item-list">
+
+        </div>
+    </div>
+
+    <script lang="javascript">
+        // 값을 담을 빈 배열 변수 선언:
+        let itemList=[];
+        // 버튼을 클릭했을 때의 event를 달기 위해 먼저 해당 버튼 인식 추가:
+        let addBtn=document.querySelector('#addBtn');
+        // 버튼을 클릭했을 때의 event 달기 시작:
+        addBtn.addEventListener('click', function addList() {
+            let item=document.querySelector('#item').value;
+            if (item!=null) {
+                itemList.push(item);
+                // 빈 배열에 값 추가가 잘 되나 확인 시작:
+                console.log(itemList);
+                // 배열에 값 추가 기능 추가 완료
+                // input에 입력한 값 자동으로 지우기 기능 추가 시작:
+                document.querySelector('#item').value="";
+                // 하나 입력 후 다시 커서 활성화 기능 추가 시작:
+                document.querySelector('#item').focus();
+                // PROCESS:1.배열 만들기,2.배열에 추가 완료
+            }
+            showList();
+        });
+        // 배열값을 출력&삭제 버튼+id 부여해주는 함수:
+        function showList() {
+            let ul="<ul>";
+            for (let i = 0; i < itemList.length; i++) {
+                // 배열값을 <li> 문자값으로 감쌈:
+                ul += "<li>" + itemList[i] + "<i class='close-btn'>✔</i></li>";
+            }
+            ul+="</ul>";
+            document.querySelector('.item-list').innerHTML=ul;
+            let closeBtnAll=document.querySelectorAll('.close-btn');
+            for (let i = 0; i < closeBtnAll.length; i++) {
+                closeBtnAll[i].addEventListener('click', function removeList() {
+                    console.log(this);
+                    let closeID=this.getAttribute('id');
+                    itemList.splice(closeID+1,1);
+                    showList();
+                });
+                
+            }
+        }
+
+
+    </script>
+</body>
+</html>
