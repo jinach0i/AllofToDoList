@@ -60,7 +60,7 @@
             let ul="<ul>";
             for (let i = 0; i < itemList.length; i++) {
                 // 배열값을 <li> 문자값으로 감쌈:
-                ul += "<li>" + itemList[i] + "<i class='close-btn'>✔</i></li>";
+                ul += "<li>" + itemList[i] + "<i class='close-btn' id=" + i + ">✔</i></li>";
             }
             ul+="</ul>";
             document.querySelector('.item-list').innerHTML=ul;
@@ -69,7 +69,7 @@
                 closeBtnAll[i].addEventListener('click', function removeList() {
                     console.log(this);
                     let closeID=this.getAttribute('id');
-                    itemList.splice(closeID+1,1);
+                    itemList.splice(closeID,1);
                     showList();
                 });
                 
